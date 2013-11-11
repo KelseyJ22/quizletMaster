@@ -24,7 +24,7 @@ public class BlobManager
 	{
 		this.delim = delim;
 	}
-	public String compress(Collection<Storable> set)
+	public String compress(Collection<? extends Storable> set)
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append(delim);
@@ -68,7 +68,7 @@ public class BlobManager
 		}
 		return elems;
 	}
-	public String compress(Map<String, Storable> map)
+	public String compress(Map<String, ? extends Storable> map)
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append(delim);
