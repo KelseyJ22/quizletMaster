@@ -24,6 +24,19 @@ public class BlobManager
 	{
 		this.delim = delim;
 	}
+	/** 
+	*
+	* Takes a collection of Storable elements and returns a compressed String
+	*
+	* Example:
+	* new BlobManager("DELIM").compress(ArrayList('A', 'B', 'C'))
+	* Returns:
+	* "DELIMADELIMBDELIMCDELIM"
+	* For Storable elements, .compress(ArrayList(foo, bar))
+	* Returns:
+	* "DELIM" + foo.toString() + "DELIM" + bar.toString() + "DELIM"
+	*
+	*/
 	public String compress(Collection<? extends Storable> set)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -34,6 +47,11 @@ public class BlobManager
 		}
 		return builder.toString();
 	}
+	/**
+	*
+	* Refer to compress(Collection< ? extends Storable> set)
+	*
+	*/
 	public String compressStringSet(Set<String> set)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -44,6 +62,11 @@ public class BlobManager
 		}
 		return builder.toString();
 	}
+	/**
+	*
+	* Performs the exact inverse of compressStringSet
+	* 
+	*/
 	public Set<String> decompress(String blob)
 	{
 		Set<String> elems = new HashSet<String>();
@@ -59,6 +82,11 @@ public class BlobManager
 		}
 		return elems;
 	}
+	/**
+	*
+	* Refer to decompress(String blob)
+	* 
+	*/
 	public Set<Integer> decompressIntSet(String blob)
 	{
 		Set<Integer> elems = new HashSet<>();
@@ -68,6 +96,11 @@ public class BlobManager
 		}
 		return elems;
 	}
+	/** 
+	*
+	* Functions much like compress(Collection<Storable> set)
+	*
+	*/
 	public String compress(Map<String, ? extends Storable> map)
 	{
 		StringBuilder builder = new StringBuilder();
@@ -78,6 +111,11 @@ public class BlobManager
 		}
 		return builder.toString();
 	}
+	/**
+	*
+	* Performs the exact inverse of compress(Collection<String, Storable> map>
+	* 
+	*/
 	public Map<String, String> decompressMap(String blob)
 	{
 		Map<String, String> map = new HashMap<String, String>();
