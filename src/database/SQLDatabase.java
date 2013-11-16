@@ -16,7 +16,7 @@ public class SQLDatabase
 		}
 	}
 	
-	private Connection con;
+	private Connection con;				Connection getConnection() { return con; }
 	private Statement statement;
 	
 	/** Connects to a database server and opens the specified database */
@@ -51,7 +51,22 @@ public class SQLDatabase
 	        }
 	    }, "Shutdown MySQL thread"));
 	}
-
+	/**
+	 * 
+	 * Creates a table which acts as a Map to store <String, Serializable> pairs of objects.
+	 * While this method will not enforce Serializability of the objects, it is crucial that it implement Serializable.
+	 * 
+	 * Will create the table in the database if it does not exist
+	 * 
+	 * @param tableName		Name of table
+	 * @param type			Type of object that will be stored
+	 * @return				SQLTable object representing the given table
+	 */
+	public synchronized <V> SQLTable<V> getTable(String tableName, Class<V> type)
+	{
+		return new SQLTable<V>(tableName, this);
+	}
+	/** Executes the specified SQL request */
 	public synchronized void executeUpdate(String request)
 	{
 		try
@@ -64,6 +79,12 @@ public class SQLDatabase
 			System.exit(1);
 		}
 	}
+	/** Executes the specified SQL update. Will throw an SQLException so it can be handled*/
+	public synchronized void executeUpdateCatchable(String request) throws SQLException
+	{
+		statement.executeUpdate(request);
+	}
+	/** Executes the specified SQL query */
 	public synchronized ResultSet executeQuery(String request)
 	{
 		try
@@ -77,5 +98,10 @@ public class SQLDatabase
 		}
 		//not reached
 		return null;
+	}
+	/** Executes the specified SQL query. Will throw an SQLException so it can be handled*/
+	public synchronized ResultSet executeQueryCatchable(String request) throws SQLException
+	{
+		return statement.executeQuery(request);
 	}
 }
