@@ -1,6 +1,8 @@
 package quizlet;
 
 import java.util.Comparator;
+import database.Storable;
+import java.util.ArrayList;
 
 public class Quiz implements Storable {
 	private ArrayList<Question> allQuestions;
@@ -8,9 +10,8 @@ public class Quiz implements Storable {
 	private int timesTaken;
 	//public so can be updated outside the class
 	//(this is assuming we don't make the QuizHistory method it's own thing)
-	public ArrayList<Performance> history;
-	public Map<Profile, Int> allRatings;
 	public Map<Profile, String> allReviews;
+	public Map<Profile, Integer> allRatings;
 
 	public Quiz() {
 		//initialize all the instance variables
@@ -28,6 +29,12 @@ public class Quiz implements Storable {
 	
 	private long creationTime(){
 		return creation;
+	}
+	
+	@Override
+	public String toSQL() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	private int timesTaken(){
