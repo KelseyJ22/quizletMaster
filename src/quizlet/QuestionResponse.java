@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,14 +37,15 @@ public class QuestionResponse extends Question {
 	@Override
 	protected void displayQuestion(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		PrintWriter out = response.getWriter();
+		super.displayQuestion(request, response);
 		out.println("<head>");
 		out.println("<title>Question</title>");
 		out.println("</head>");
 		out.println("<body>");
 		out.println(question);
 		out.println("<form action=\"QuestionServlet\" method=\"post\">"
-				+ "<input type=\"text\" name=\"answer\" /><br><br>"
-				+ "<input type=\"submit\" name=\"" + Question.ANSWER_PARAM + "\" value = \"Next Question ->\"/>"
+				+ "<input type=\"text\" name=\""+ Question.ANSWER_PARAM + "\" /><br><br>"
+				+ "<input type=\"submit\" name=\"submit\" value = \"Next Question ->\"/>"
 				+ "</p></form>");
 		out.println("</body>");
 		out.println("</html>");
@@ -83,7 +83,33 @@ public class QuestionResponse extends Question {
 	}
 
 	@Override
-	protected void gradeAnswer(HttpServletRequest request, HttpServletResponse response) {
-		//deal with this later
+	protected void gradeAnswer(HttpServletRequest request, HttpServletResponse response) 
+	{
+		//just getting something to work here
+		String answer = request.getParameter(Question.ANSWER_PARAM);
+		Performance performance = (Performance) request.getSession().getAttribute(Question.PERFORMANCE_ATTR);
+		double score = 0.0d;
+		if(answers.contains(answer))
+		{
+			score = 1.0d;
+		}
+		performance.addAnswer((Question) request.getSession().getAttribute(Question.CURR_QUESTION_ATTR), score);
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o instanceof QuestionResponse)
+		{
+			QuestionResponse other = (QuestionResponse) o;
+			return other.question.equals(question) && other.answers.equals(answers);
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return question.hashCode() * answers.hashCode();
 	}
 }

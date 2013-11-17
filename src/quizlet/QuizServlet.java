@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import profile.Profile;
+
 /**
  * Servlet implementation class QuizServlet
  */
@@ -35,14 +37,16 @@ public class QuizServlet extends HttpServlet
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Quiz quiz = (Quiz) request.getSession().getAttribute(Question.QUIZ_ATTR);
+		//Quiz quiz = (Quiz) request.getSession().getAttribute(Question.QUIZ_ATTR);
+		Quiz quiz = Quiz.aQuiz;
 		List<Question> questions = quiz.getQuestions();
 		Question firstQuestion = questions.remove(0);
-		request.setAttribute(Question.QUESTIONS_LIST_ATTR, questions);
-		request.setAttribute(Question.PERFORMANCE_ATTR, new Performance(quiz));
-		request.setAttribute(Question.CURR_QUESTION_ATTR, firstQuestion);
-		request.setAttribute(Question.OPTION_ATTR, Question.OPTION_QUESTION);
-		request.getServletContext().getRequestDispatcher("QuestionServlet").forward(request, response);
+		request.getSession().setAttribute(Question.QUESTIONS_LIST_ATTR, questions);
+		request.getSession().setAttribute(Question.PERFORMANCE_ATTR, new Performance(quiz));
+		request.getSession().setAttribute(Question.CURR_QUESTION_ATTR, firstQuestion);
+		request.getSession().setAttribute(Question.OPTION_ATTR, Question.OPTION_QUESTION);
+		request.getSession().setAttribute(Question.PREFERENCES_ATTR, new QuizPreferences());
+		request.getSession().getServletContext().getRequestDispatcher("/QuestionServlet").forward(request, response);
 		// TODO Auto-generated method stub
 	}
 

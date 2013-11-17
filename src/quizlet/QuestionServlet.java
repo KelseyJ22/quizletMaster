@@ -40,15 +40,15 @@ public class QuestionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		String option = request.getParameter(Question.OPTION_PARAM);
+		String option = (String) request.getSession().getAttribute(Question.OPTION_ATTR);
 		Question question = (Question) request.getSession().getAttribute(Question.CURR_QUESTION_ATTR);
 		QuizPreferences quizPrefs = (QuizPreferences) request.getSession().getAttribute(Question.PREFERENCES_ATTR);
 		switch(option)
 		{
-			case Question.OPTION_EDIT : question.displayEditPage(request, response);
+			case Question.OPTION_EDIT : question.displayEditPage(request, response); break;
 			case Question.OPTION_QUESTION : 
 			{
-				question.displayQuestion(request, response);
+				question.displayQuestion(request, response); break;
 			}
 			case Question.OPTION_ANSWER : 
 			{
@@ -65,14 +65,17 @@ public class QuestionServlet extends HttpServlet {
 				//does this edit questions in place (does the session context keep a pointer?)
 				if(questions.isEmpty())
 				{
-					//We're done...
+					System.out.println(((Performance) request.getSession().getAttribute(Question.PERFORMANCE_ATTR)).toString());
+					request.getRequestDispatcher("/QuizSummary.jsp").forward(request, response);
+					return;
 				}
 				Question nextQuestion = questions.remove(0);
 				//request.getSessionContext().setAttribute(QUESTIONS_LIST, questions);
-				request.setAttribute(Question.OPTION_ATTR, Question.OPTION_QUESTION);
-				request.setAttribute(Question.PERFORMANCE_ATTR, request.getAttribute(Question.PERFORMANCE_ATTR));
-				request.setAttribute(Question.CURR_QUESTION_ATTR, nextQuestion);
-				request.getServletContext().getRequestDispatcher("QuestionServlet").forward(request, response);
+				request.getSession().setAttribute(Question.OPTION_ATTR, Question.OPTION_QUESTION);
+				//request.setAttribute(Question.PERFORMANCE_ATTR, request.getAttribute(Question.PERFORMANCE_ATTR));
+				request.getSession().setAttribute(Question.CURR_QUESTION_ATTR, nextQuestion);
+				request.getRequestDispatcher("/QuestionServlet").forward(request, response);
+				break;
 			}
 		}
 	}
