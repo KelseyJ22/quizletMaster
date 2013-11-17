@@ -46,6 +46,14 @@ public abstract class Question implements Serializable
 	 *	Call the superclass method to make sure the page redirects correctly to the answer servlet 
 	 *
 	 * */
+	
+	//Name of the question to identify it with in the QuizSummary Page
+	private String name; 				public String getName() { return name; }
+	public Question(String name)
+	{
+		this.name = name;
+	}
+	
 	protected void displayQuestion(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		request.getSession().setAttribute(Question.OPTION_ATTR, Question.OPTION_ANSWER);
@@ -59,13 +67,6 @@ public abstract class Question implements Serializable
 	
 	/** Add to the Performance Object */
 	protected abstract void gradeAnswer(HttpServletRequest request, HttpServletResponse response) throws IOException;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Question() {
-        super();
-    }
     
     /*
      * MUST override equals() and hashcode() !

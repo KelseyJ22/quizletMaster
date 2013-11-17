@@ -30,8 +30,8 @@ public class MultipleChoice extends Question {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MultipleChoice(String ques, int correct) {
-        super();
+    public MultipleChoice(String name, String ques, int correct) {
+        super(name);
         question = ques;
         correctIndex = correct;
         //will have to populate this with the options -- because
