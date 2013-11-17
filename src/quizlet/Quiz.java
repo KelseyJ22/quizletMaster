@@ -1,14 +1,10 @@
 package quizlet;
 
-<<<<<<< HEAD
 import java.io.Serializable;
 import java.util.*;
 
 public class Quiz implements Serializable 
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -9156629140836471846L;
 	
 	private List<Question> allQuestions;
@@ -35,53 +31,9 @@ public class Quiz implements Serializable
 		this.creator = creator;
 	}
 	
-	/** Returns a duplicated list of questions */
-	public List<Question> getQuestions()
-	{
-		List<Question> newQuestions = new ArrayList<>();
-		newQuestions.addAll(allQuestions);
-		return newQuestions;
-	}
-	/*
-	public Question questionAfter(Question current){
-		int curr = allQuestions.indexOf(current);
-		if(curr != allQuestions.size() - 1){
-=======
-import java.util.Comparator;
-import database.Storable;
-import java.util.ArrayList;
-
-public class Quiz implements Storable {
-	private ArrayList<Question> allQuestions;
-	private long creation;
-	private int timesTaken;
-	//public so can be updated outside the class
-	//(this is assuming we don't make the QuizHistory method it's own thing)
-	public Map<Profile, String> allReviews;
-	public Map<Profile, Integer> allRatings;
-
-	public Quiz() {
-		//initialize all the instance variables
-		allQuestions = new ArrayList<Question>();
-		creation = System.currentTimeMillis();
-		timesTaken = 0;
-		history = new ArrayList<Performance>();
-		allRatings = new Map<Profile, Int>();
-		allReviews = new Map<Profile, String>();
-	}
-	
-	/**
-	 * Do something with the Storable interface...?
-	 */
 	
 	private long creationTime(){
 		return creation;
-	}
-	
-	@Override
-	public String toSQL() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	private int timesTaken(){
@@ -94,8 +46,7 @@ public class Quiz implements Storable {
 	
 	public Question questionAfter(Question current){
 		int curr = allQuestions.indexOf(current);
-		if(curr != allQuestions.length() - 1){
->>>>>>> upstream/master
+		if(curr != allQuestions.size() - 1){
 			return allQuestions.get(curr + 1);
 		}
 		//error result -- should never happen if we only call this after isLastQuestion gives the okay
@@ -104,29 +55,21 @@ public class Quiz implements Storable {
 	
 	public Boolean isLastQuestion(Question current){
 		int curr = allQuestions.indexOf(current);
-<<<<<<< HEAD
 		return curr == allQuestions.size() - 1;
 	}
-	*/
+	
 	//hmmm what is this supposed to do?
 	public void take(Profile profile){
 		//aaaand something else
-=======
-		return curr == allQuestions.length();
-	}
-	
-	public void take(Profile){
->>>>>>> upstream/master
 		timesTaken++;
 	}
-	
+		
 	private Comparator<Quiz> compareByAge = new Comparator<Quiz>(){
-<<<<<<< HEAD
 		@Override
 		public int compare(Quiz a, Quiz b){
 			//a is older than b
 			return (int) (b.creation - a.creation);
-=======
+		}
 		private int compare(Quiz a, Quiz b){
 			//a is older than b
 			if(a.creation < b.creation) return 1;
@@ -134,18 +77,15 @@ public class Quiz implements Storable {
 			if(a.creation > b.creation) return -1;
 			//if a and b are the same age -- shouldn't happen (?)
 			else return 0;
->>>>>>> upstream/master
 		}
 	};
 	
 	private Comparator<Quiz> compareByPopularity = new Comparator<Quiz>(){
-<<<<<<< HEAD
 		@Override
 		public int compare(Quiz a, Quiz b){
 			return b.timesTaken - a.timesTaken;
 		}
-	};
-=======
+
 		private int compare(Quiz a, Quiz b){
 			//a has been taken more times than b
 			if(a.timesTaken > b.timesTaken) return 1;
@@ -154,8 +94,7 @@ public class Quiz implements Storable {
 			//a and b have been taken the same number of times
 			else return 0;
 		}
-	}
->>>>>>> upstream/master
+	};
 	
 	//in order for this to work must update history outside the class (quiz.history.add(...) etc)
 	private List<Performance> quizHistory(){
@@ -171,8 +110,4 @@ public class Quiz implements Storable {
 	private Map<Profile, String> review(){
 		return allReviews;
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> upstream/master
 }
