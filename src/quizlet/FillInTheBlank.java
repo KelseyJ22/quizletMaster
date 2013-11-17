@@ -32,8 +32,8 @@ public class FillInTheBlank extends Question {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FillInTheBlank(String ques, String ans) {
-        super();
+    public FillInTheBlank(String name, String ques, String ans) {
+        super(name);
         question = ques;
         answers = new ArrayList<String>();
         answers.add(ans);
@@ -118,6 +118,6 @@ public class FillInTheBlank extends Question {
 		Performance performance = (Performance) request.getSession().getAttribute(Question.PERFORMANCE_ATTR);
 		Question currQuestion = (Question) request.getSession().getAttribute(Question.CURR_QUESTION_ATTR);
 		String answer = request.getParameter(Question.ANSWER_PARAM);
-		performance.addAnswer(currQuestion, answers.contains(answer) ? 1 : 0);
+		performance.addAnswer(currQuestion, answer, answers.contains(answer) ? 1 : 0);
 	}
 }

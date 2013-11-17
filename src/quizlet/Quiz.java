@@ -63,22 +63,7 @@ public class Quiz implements Serializable
 		//aaaand something else
 		timesTaken++;
 	}
-		/*
-	private Comparator<Quiz> compareByAge = new Comparator<Quiz>(){
-		@Override
-		public int compare(Quiz a, Quiz b){
-			//a is older than b
-			return (int) (b.creation - a.creation);
-		}
-	};
 	
-	private Comparator<Quiz> compareByPopularity = new Comparator<Quiz>()  {
-		@Override
-		public int compare(Quiz a, Quiz b){
-			return b.timesTaken - a.timesTaken;
-		}
-	};
-	*/
 	//in order for this to work must update history outside the class (quiz.history.add(...) etc)
 	private List<Performance> quizHistory(){
 		return history;
