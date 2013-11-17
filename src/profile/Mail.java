@@ -1,6 +1,12 @@
 package profile;
 
-public abstract class Mail { // abstract needed?
+import java.io.Serializable;
+
+public abstract class Mail implements Serializable { // abstract needed?
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7235166688870963419L;
 	public String msg;
 	
 	/**

@@ -11,7 +11,7 @@
     	User Name: <input type="text" name="name"/> <br/> <br/>
     	Password: <input type="text" name="password"/>
     	<input type="submit" value="Login"/>
-	</form> <br/>
+	</form> <br/>               
 	<a href="create_new_account.jsp">Create New Account</a>
 </body>
 </html>

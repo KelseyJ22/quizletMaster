@@ -64,6 +64,7 @@ public class SQLTable <V>
 		catch(IOException | SQLException e)
 		{
 			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 	

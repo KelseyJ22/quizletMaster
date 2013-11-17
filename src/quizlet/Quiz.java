@@ -7,17 +7,6 @@ import profile.Profile;
 
 public class Quiz implements Serializable 
 {
-	//Hardcoded sample quiz
-	public static Quiz aQuiz;
-	
-	static
-	{
-		List<Question> questions = new ArrayList<Question>();
-		questions.add(new QuestionResponse("What class is this project for?", "CS108"));
-		questions.add(new QuestionResponse("What school do we go to?", "Stanford"));
-		//questions.add(new QuestionResponse("Is there a right answer to this question?", "Yes"));
-		aQuiz = new Quiz("A Quiz", null, questions);
-	}
 	
 	private static final long serialVersionUID = -9156629140836471846L;
 	
@@ -34,6 +23,7 @@ public class Quiz implements Serializable
 	//(this is assuming we don't make QuizHistory it's own thing)
 	
 	//public ArrayList<Performance> history;
+	
 	private Map<Profile, Integer> allRatings = new HashMap<>();
 	private Map<Profile, String> allReviews = new HashMap<>();
 
@@ -45,16 +35,8 @@ public class Quiz implements Serializable
 		this.creator = creator;
 	}
 	
-	
-	private long creationTime(){
-		return creation;
-	}
-	
-	private int timesTaken(){
-		return timesTaken;
-	}
-	
 	/** Returns a shallow copy of questions */
+	
 	public List<Question> getQuestions()
 	{
 		List<Question> shallowCopy = new ArrayList<>();
@@ -81,7 +63,7 @@ public class Quiz implements Serializable
 		//aaaand something else
 		timesTaken++;
 	}
-		
+		/*
 	private Comparator<Quiz> compareByAge = new Comparator<Quiz>(){
 		@Override
 		public int compare(Quiz a, Quiz b){
@@ -90,13 +72,13 @@ public class Quiz implements Serializable
 		}
 	};
 	
-	private Comparator<Quiz> compareByPopularity = new Comparator<Quiz>(){
+	private Comparator<Quiz> compareByPopularity = new Comparator<Quiz>()  {
 		@Override
 		public int compare(Quiz a, Quiz b){
 			return b.timesTaken - a.timesTaken;
 		}
 	};
-	
+	*/
 	//in order for this to work must update history outside the class (quiz.history.add(...) etc)
 	private List<Performance> quizHistory(){
 		return history;
@@ -111,4 +93,5 @@ public class Quiz implements Serializable
 	private Map<Profile, String> review(){
 		return allReviews;
 	}
+	
 }
