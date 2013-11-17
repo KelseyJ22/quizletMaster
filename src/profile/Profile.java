@@ -1,5 +1,6 @@
 package profile;
 
+import java.io.Serializable;
 import java.util.*;
 
 /** 
@@ -8,7 +9,11 @@ import java.util.*;
  * @author KuanP
  *
  */
-public class Profile {
+public class Profile implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2252425260054810253L;
 	private String ID;
 	private String name;
 	private String password;

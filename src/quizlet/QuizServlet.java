@@ -38,7 +38,7 @@ public class QuizServlet extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Quiz quiz = (Quiz) request.getSession().getAttribute(Question.QUIZ_ATTR);
-		Quiz quiz = Quiz.aQuiz;
+		Quiz quiz = ((QuizWebsite) getServletContext().getAttribute(QuizWebsite.QUIZ_WEBSITE_ATTR)).getQuiz("A Quiz");
 		List<Question> questions = quiz.getQuestions();
 		Question firstQuestion = questions.remove(0);
 		request.getSession().setAttribute(Question.QUESTIONS_LIST_ATTR, questions);

@@ -15,19 +15,15 @@ public class QuizWebsite implements Serializable
 	
 	private static final String TABLE = "QUIZ_WEBSITE_TABLE";
 	private static final String ENTRY_NAME = "THE_ONE_QUIZ_WEBSITE";
+	
+	public static final String QUIZ_WEBSITE_ATTR = "QUIZ_WEBSITE"; 
+	public static final String SQL_DATABASE_ATTR = "SQL_DATABASE";
 	public static final String PROFILE_ATTR = "PROFILE_ATTR";
 	
 	//private List<Announcement> announcements = new ArrayList<>();			public List<Announcement> getAnnouncements() { return announcements; }
 	//Quizzes hashed to their names
 	private Map<String, Quiz> quizzes = new HashMap<String, Quiz>();		public Quiz getQuiz(String name) { return quizzes.get(name); } 
 	private Map<String, Profile> profiles = new HashMap<String, Profile>();
-	
-	private SQLDatabase database;
-	
-	public QuizWebsite(SQLDatabase database)
-	{
-		this.database = database;
-	}
 	
 	public static QuizWebsite loadFrom(SQLDatabase database)
 	{
@@ -57,21 +53,18 @@ public class QuizWebsite implements Serializable
 	{
 		return quizzes.values().size();
 	}
-	
 	/** Adds the quiz to the database. Saves the database. */
-	public void addQuiz(Quiz quiz)
+	public void addQuiz(SQLDatabase database, Quiz quiz)
 	{
 		quizzes.put(quiz.getQuizName(), quiz);
-		save();
+		save(database);
 	}
-	
 	/** Adds the profile to the database. Saves the database. */
-	public void addProfile(Profile profile)
+	public void addProfile(SQLDatabase database, Profile profile)
 	{
 		profiles.put(profile.getName(), profile);
-		save();
+		save(database);
 	}
-	
 	/** Returns the profile by name. If no such profile exists, that's your problem. */
 	public Profile getProfile(String name)
 	{
@@ -82,8 +75,7 @@ public class QuizWebsite implements Serializable
 		}
 		return profiles.get(name);
 	}
-	
-	private void save()
+	private void save(SQLDatabase database)
 	{
 		SQLTable<QuizWebsite> table = database.getTable(TABLE, QuizWebsite.class);
 		table.put(ENTRY_NAME, this);
