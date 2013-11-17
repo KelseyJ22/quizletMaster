@@ -1,7 +1,5 @@
 package profile;
 
-import quizlet.*;
-
 public class Administrator extends Profile{
 	
 	public Administrator(String ID, String name, String password) {

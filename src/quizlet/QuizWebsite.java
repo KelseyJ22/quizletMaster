@@ -1,30 +1,23 @@
 package quizlet;
 
 import java.io.Serializable;
-import java.sql.Blob;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import profile.Profile;
 import database.SQLTable;
-import database.Serializer;
 import database.SQLDatabase;
-import database.SQLUtils;
 
 public class QuizWebsite implements Serializable
 {
-	
-	
 	private static final long serialVersionUID = -3603951536318213219L;
 	
 	private static final String TABLE = "QUIZ_WEBSITE_TABLE";
 	private static final String ENTRY_NAME = "THE_ONE_QUIZ_WEBSITE";
+	public static final String PROFILE_ATTR = "PROFILE_ATTR";
 	
-	private List<Announcement> announcements = new ArrayList<>();			public List<Announcement> getAnnouncements() { return announcements; }
+	//private List<Announcement> announcements = new ArrayList<>();			public List<Announcement> getAnnouncements() { return announcements; }
 	//Quizzes hashed to their names
 	private Map<String, Quiz> quizzes = new HashMap<String, Quiz>();		public Quiz getQuiz(String name) { return quizzes.get(name); } 
 	private Map<String, Profile> profiles = new HashMap<String, Profile>();
@@ -68,7 +61,7 @@ public class QuizWebsite implements Serializable
 	/** Adds the quiz to the database. Saves the database. */
 	public void addQuiz(Quiz quiz)
 	{
-		quizzes.put(quiz.getName(), quiz);
+		quizzes.put(quiz.getQuizName(), quiz);
 		save();
 	}
 	
