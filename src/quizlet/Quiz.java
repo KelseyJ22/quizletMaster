@@ -3,8 +3,11 @@ package quizlet;
 import java.io.Serializable;
 import java.util.*;
 
+import profile.Profile;
+
 public class Quiz implements Serializable 
 {
+	
 	private static final long serialVersionUID = -9156629140836471846L;
 	
 	private List<Question> allQuestions;
@@ -20,6 +23,7 @@ public class Quiz implements Serializable
 	//(this is assuming we don't make QuizHistory it's own thing)
 	
 	//public ArrayList<Performance> history;
+	
 	private Map<Profile, Integer> allRatings = new HashMap<>();
 	private Map<Profile, String> allReviews = new HashMap<>();
 
@@ -31,17 +35,13 @@ public class Quiz implements Serializable
 		this.creator = creator;
 	}
 	
+	/** Returns a shallow copy of questions */
 	
-	private long creationTime(){
-		return creation;
-	}
-	
-	private int timesTaken(){
-		return timesTaken;
-	}
-	
-	public List<Question> getQuestions(){
-		return allQuestions;
+	public List<Question> getQuestions()
+	{
+		List<Question> shallowCopy = new ArrayList<>();
+		shallowCopy.addAll(allQuestions);
+		return shallowCopy;
 	}
 	
 	public Question questionAfter(Question current){
@@ -63,39 +63,22 @@ public class Quiz implements Serializable
 		//aaaand something else
 		timesTaken++;
 	}
-		
+		/*
 	private Comparator<Quiz> compareByAge = new Comparator<Quiz>(){
 		@Override
 		public int compare(Quiz a, Quiz b){
 			//a is older than b
 			return (int) (b.creation - a.creation);
 		}
-		private int compare(Quiz a, Quiz b){
-			//a is older than b
-			if(a.creation < b.creation) return 1;
-			//a is new than b
-			if(a.creation > b.creation) return -1;
-			//if a and b are the same age -- shouldn't happen (?)
-			else return 0;
-		}
 	};
 	
-	private Comparator<Quiz> compareByPopularity = new Comparator<Quiz>(){
+	private Comparator<Quiz> compareByPopularity = new Comparator<Quiz>()  {
 		@Override
 		public int compare(Quiz a, Quiz b){
 			return b.timesTaken - a.timesTaken;
 		}
-
-		private int compare(Quiz a, Quiz b){
-			//a has been taken more times than b
-			if(a.timesTaken > b.timesTaken) return 1;
-			//a has been taken more times than b
-			if(a.timesTaken < b.timesTaken) return -1;
-			//a and b have been taken the same number of times
-			else return 0;
-		}
 	};
-	
+	*/
 	//in order for this to work must update history outside the class (quiz.history.add(...) etc)
 	private List<Performance> quizHistory(){
 		return history;
@@ -110,4 +93,5 @@ public class Quiz implements Serializable
 	private Map<Profile, String> review(){
 		return allReviews;
 	}
+	
 }

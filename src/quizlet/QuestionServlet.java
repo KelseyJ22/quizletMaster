@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import profile.Profile;
+
 /**
  * Servlet implementation class QuestionServlet
  */
@@ -33,22 +35,32 @@ public class QuestionServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * 
-	 * Send in a parameter "OPTION" with one of the following values:
+	 * Send in an attribute "OPTION" with one of the following values:
 	 * EDIT (not built)
 	 * QUESTION (displays the question)
 	 * ANSWER (grades the answer to the question)
+	 * 
+	 * If EDIT:
+	 * 
+	 * Else If QUESTION:
+	 * Will display the question and prepare to send the answer back to this servlet. The OPTION attribute should be set to Question.ANSWER
+	 * 
+	 * Else IF ANSWER:
+	 * Will either give immediate feedback, or will simply grade the answer. Question.CURR_QUESTION_ATTR and Question.QUESTIONS_LIST will
+	 * be updated to reflect moving forward. If the quiz is complete, all Attributes related to this Quiz will be removed.
+	 * 
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		String option = request.getParameter(Question.OPTION_PARAM);
+		String option = (String) request.getSession().getAttribute(Question.OPTION_ATTR);
 		Question question = (Question) request.getSession().getAttribute(Question.CURR_QUESTION_ATTR);
 		QuizPreferences quizPrefs = (QuizPreferences) request.getSession().getAttribute(Question.PREFERENCES_ATTR);
 		switch(option)
 		{
-			case Question.OPTION_EDIT : question.displayEditPage(request, response);
+			case Question.OPTION_EDIT : question.displayEditPage(request, response); break;
 			case Question.OPTION_QUESTION : 
 			{
-				question.displayQuestion(request, response);
+				question.displayQuestion(request, response); break;
 			}
 			case Question.OPTION_ANSWER : 
 			{
@@ -65,15 +77,26 @@ public class QuestionServlet extends HttpServlet {
 				//does this edit questions in place (does the session context keep a pointer?)
 				if(questions.isEmpty())
 				{
-					//We're done...
+					completeQuiz(request, response);
+					return;
 				}
 				Question nextQuestion = questions.remove(0);
-				//request.getSessionContext().setAttribute(QUESTIONS_LIST, questions);
-				request.setAttribute(Question.OPTION_ATTR, Question.OPTION_QUESTION);
-				request.setAttribute(Question.PERFORMANCE_ATTR, request.getAttribute(Question.PERFORMANCE_ATTR));
-				request.setAttribute(Question.CURR_QUESTION_ATTR, nextQuestion);
-				request.getServletContext().getRequestDispatcher("QuestionServlet").forward(request, response);
+				request.getSession().setAttribute(Question.OPTION_ATTR, Question.OPTION_QUESTION);
+				request.getSession().setAttribute(Question.CURR_QUESTION_ATTR, nextQuestion);
+				request.getRequestDispatcher("/QuestionServlet").forward(request, response);
+				break;
 			}
 		}
+	}
+	private void completeQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		//add performance
+		Profile profile = ((Profile) request.getSession().getAttribute(QuizWebsite.PROFILE_ATTR));
+		Performance performance = ((Performance) request.getSession().getAttribute(Question.PERFORMANCE_ATTR));
+		//profile.addPerformance(performance);
+		//clear out unused attributes
+		request.getSession().removeAttribute(Question.OPTION_ATTR);
+		request.getSession().removeAttribute(Question.CURR_QUESTION_ATTR);
+		request.getRequestDispatcher("QuizSummary.jsp").forward(request, response);
 	}
 }

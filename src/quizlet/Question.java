@@ -41,8 +41,15 @@ public abstract class Question implements Serializable
 	
 	private static final long serialVersionUID = 1L;
 
-	/** constructs the page which asks the question */
-	protected abstract void displayQuestion(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	/** Constructs the page which asks the question 
+	 *
+	 *	Call the superclass method to make sure the page redirects correctly to the answer servlet 
+	 *
+	 * */
+	protected void displayQuestion(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		request.getSession().setAttribute(Question.OPTION_ATTR, Question.OPTION_ANSWER);
+	}
 	
 	//constructs the page which displays immediate feedback
 	//Answer = String for now (will be in Performance)
@@ -59,5 +66,12 @@ public abstract class Question implements Serializable
     public Question() {
         super();
     }
+    
+    /*
+     * MUST override equals() and hashcode() !
+     * 
+     * They should work off of shallow comparisons: expect no deep copies of questions to exist
+     * 
+     */
 
 }

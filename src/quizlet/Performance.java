@@ -29,4 +29,13 @@ public class Performance implements Serializable
 		}
 		scores[index] = score;
 	}
+	public String toString()
+	{
+		double totalScore = 0;
+		for(double points : scores)
+		{
+			totalScore += points;
+		}
+		return Double.toString(totalScore);
+	}
 }
