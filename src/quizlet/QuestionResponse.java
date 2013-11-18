@@ -27,8 +27,8 @@ public class QuestionResponse extends Question {
      * @see HttpServlet#HttpServlet()
      */
     //hmm let's think about this constructor -- gotta be a better way!
-    public QuestionResponse(String ques, String ans) {
-        super();
+    public QuestionResponse(String name, String ques, String ans) {
+        super(name);
         question = ques;
         answers = new ArrayList<String>();
         answers.add(ans);
@@ -93,7 +93,7 @@ public class QuestionResponse extends Question {
 		{
 			score = 1.0d;
 		}
-		performance.addAnswer((Question) request.getSession().getAttribute(Question.CURR_QUESTION_ATTR), score);
+		performance.addAnswer((Question) request.getSession().getAttribute(Question.CURR_QUESTION_ATTR), answer, score);
 	}
 	
 	@Override

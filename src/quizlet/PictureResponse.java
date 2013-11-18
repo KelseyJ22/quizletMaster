@@ -38,8 +38,8 @@ public class PictureResponse extends Question {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PictureResponse(String url, String ans) {
-        super();
+    public PictureResponse(String name, String url, String ans) {
+        super(name);
         answers = new ArrayList<String>();
         link = url;
         answers.add(ans);
