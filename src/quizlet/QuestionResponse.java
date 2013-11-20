@@ -26,12 +26,26 @@ public class QuestionResponse extends Question {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    //hmm let's think about this constructor -- gotta be a better way!
     public QuestionResponse(String name, String ques, String ans) {
         super(name);
         question = ques;
         answers = new ArrayList<String>();
         answers.add(ans);
+    }
+    
+    public String correctAnswer(int i){
+    	//error case
+    	if (i > answers.size() - 1) return answers.get(0);
+    	//correct functionality
+    	else return answers.get(i);
+    }
+    
+    public void addAnswer(String answer){
+    	answers.add(answer);
+    }
+    
+    public int numAnswers(){
+    	return answers.size();
     }
 
 	@Override

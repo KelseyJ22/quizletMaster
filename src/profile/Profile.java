@@ -23,7 +23,7 @@ public class Profile implements Serializable {
 	
 	/**
 	 * Constructor. MUST create w/ unique ID. ID should NEVER change. 
-	 * On the other hand, name and password can be eventually to be set and changed. 
+	 * On the other hand, name and password can be eventually set and changed. 
 	 * @param name
 	 * @param password
 	 */
