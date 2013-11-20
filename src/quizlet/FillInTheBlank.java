@@ -51,6 +51,21 @@ public class FillInTheBlank extends Question {
         	}
         }
     }
+    
+    public int numAnswers(){
+    	return answers.size();
+    }
+    
+    public void addAnswer(String answer){
+    	answers.add(answer);
+    }
+    
+    public String correctAnswer(int i){
+    	//error case
+    	if (i > answers.size() - 1) return answers.get(0);
+    	//correct functionality
+    	else return answers.get(i);
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

@@ -24,7 +24,7 @@ public class MultipleChoice extends Question {
     private String question;
     private int correctIndex;
     private ArrayList<String> options;
-    //total hack and also WHY would anyone need this many choices in a mult choice q...?
+    //WHYYY would anyone need this many options...? this mult choice would actually be hard!!
     private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
     /**
@@ -40,6 +40,34 @@ public class MultipleChoice extends Question {
         //ALSO should this be in the constructor or a required method to call later?
         //must balance simplicity at the creation vs during use/after initialization...
         options = new ArrayList<String>();
+    }
+    
+    //add an answer option to the end of the options list
+    public void addAnswer(String option){
+    	options.add(option);
+    }
+    
+    //add an answer option to a specified index in the options list
+    public void addAnswer(int index, String option){
+    	options.add(index, option);
+    }
+    
+    //for checking the construction of a question
+    public String showAnswers(){
+    	StringBuilder sb = new StringBuilder();
+    	for(int i=0; i<options.size(); i++){
+    		sb.append(options.get(i));
+    		sb.append("; ");
+    	}
+    	sb.append("correct: ");
+    	sb.append(options.get(correctIndex) + " ");
+    	sb.append(correctIndex);
+    	
+    	return sb.toString();
+    }
+    
+    public String correctAnswer(){
+    	return options.get(correctIndex);
     }
 
 

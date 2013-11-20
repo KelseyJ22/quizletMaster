@@ -58,10 +58,11 @@ public class Quiz implements Serializable
 		return curr == allQuestions.size() - 1;
 	}
 	
-	//hmmm what is this supposed to do?
+	//hmmmmm what is this supposed to do?
 	public void take(Profile profile){
 		//aaaand something else
 		timesTaken++;
+		//haha nope...
 	}
 	
 	//in order for this to work must update history outside the class (quiz.history.add(...) etc)
